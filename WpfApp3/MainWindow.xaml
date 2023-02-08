@@ -63,8 +63,8 @@
                 </Button>
             </Grid>
             <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="37" Margin="37,231,0,0" VerticalAlignment="Top" Width="57" MediaOpened="MediaElement_MediaOpened" MediaEnded="MediaElement_MediaEnded"/>
-            <StackPanel x:Name="DropDownPlaylist" HorizontalAlignment="Left" Height="194" Margin="15,42,0,0" VerticalAlignment="Top" Width="160" Visibility="Collapsed">
-                <ListBox x:Name="DropDownListbox" Height="181" Width="158" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+            <StackPanel x:Name="DropDownPlaylist" HorizontalAlignment="Left" Height="194" Margin="15,42,0,0" VerticalAlignment="Top" Width="160">
+                <ListBox x:Name="DropDownListbox" Height="181" Width="158" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DropDownListbox_SelectionChanged"/>
             </StackPanel>
             <StackPanel x:Name="infoStackPanel" HorizontalAlignment="Left" Height="210" Margin="222,44,0,0" VerticalAlignment="Top" Width="137" Visibility="Collapsed">
                 <Border BorderBrush="Black" BorderThickness="0.5" Width="114" HorizontalAlignment="Right">

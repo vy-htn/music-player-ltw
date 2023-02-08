@@ -22,16 +22,14 @@ using System.Windows.Forms.VisualStyles;
 
 namespace WpfApp3
 {
-    class Song
+    class Playlist
     {
         public string name { get; set; }
-        public string path { get; set; }
-
-
+        public List<string> songsList { get; set; } = new List<string>();
     }
 
 
-
+    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -41,8 +39,8 @@ namespace WpfApp3
        
 
         private DispatcherTimer timer = new DispatcherTimer();
-        private List<Song> songList= new List<Song>();
-        private List<string> playlist= new List<string>(); 
+        private List<string> songList= new List<string>();
+        private List<Playlist> playlistList = new List<Playlist>();
         bool isLoop = false;
         bool isRand = false;
 
@@ -55,6 +53,7 @@ namespace WpfApp3
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick1;
 
+           
 
             mediaElement.MediaOpened += MediaElement_MediaOpened;
             mediaElement.MediaEnded += MediaElement_MediaEnded;
@@ -62,9 +61,7 @@ namespace WpfApp3
 
         }
 
-
        
-
         private void Timer_Tick1(object sender, EventArgs e)
         {
             
@@ -143,15 +140,13 @@ namespace WpfApp3
             {
                foreach (string filename in openFileDialog.FileNames )
                {
-                    Song song = new Song();
-                    song.path = filename;
+                    
                     
 
-                    songList.Add(song);
+                    songList.Add(filename);
 
 
                     string safeFileName = System.IO.Path.GetFileNameWithoutExtension(filename);
-                    song.name = safeFileName;
                     listview.Items.Add(safeFileName);
 
 
@@ -193,8 +188,10 @@ namespace WpfApp3
         private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             
-
-            mediaElement.Position = TimeSpan.FromSeconds(slider.Value);
+           
+            
+                mediaElement.Position = TimeSpan.FromSeconds(slider.Value);
+              
 
         }
 
@@ -206,10 +203,10 @@ namespace WpfApp3
             {
                 if (listview.SelectedIndex == i)
                 {
-                    mediaElement.Source = new Uri(songList[i].path, UriKind.Absolute);
+                    mediaElement.Source = new Uri(songList[i], UriKind.Absolute);
                     mediaElement.LoadedBehavior = MediaState.Manual;
                     slider.Value = 0;
-                    txtBlock_songName.Text = songList[i].name;
+                    txtBlock_songName.Text = System.IO.Path.GetFileNameWithoutExtension(songList[i]);
                     
                 }    
                    
@@ -328,7 +325,7 @@ namespace WpfApp3
         private void addPlaylist_Click(object sender, RoutedEventArgs e)
         {
             string playlistName = Interaction.InputBox("Enter playlist name");
-            if (playlistName == null)
+            if (playlistName == string.Empty )
             {
                 System.Windows.Forms.MessageBox.Show("Enter valid playlist name");
 
@@ -337,17 +334,26 @@ namespace WpfApp3
             {
                 txt_Playlist.Text = playlistName;
                 txt_PlaylistHeading.Text = playlistName;
-            }
+                DropDownListbox.Items.Add(playlistName);
 
-            if (listview.SelectedItems.Count >0)
-            {
-                foreach (var item in listview.SelectedItems)
+
+
+                if (listview.Items.Count > 0)
                 {
-                    playlist.Add(songList[listview.SelectedIndex].path);
-                    
-                }
-            }
+                    Playlist playlist = new Playlist();
+                    playlist.name = playlistName;
 
+                    foreach (var item in songList)
+                    {
+                        playlist.songsList.Add(item);
+                        System.Windows.Forms.MessageBox.Show(item);
+                    }
+                    playlistList.Add(playlist);
+
+
+                }
+               
+            }
         }
 
         private void playlistButton_Click(object sender, RoutedEventArgs e)
@@ -357,5 +363,30 @@ namespace WpfApp3
             else
                 DropDownPlaylist.Visibility = Visibility.Collapsed;
         }
+
+        private void DropDownListbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+            
+                    listview.Items.Clear();
+                    songList.Clear();
+                    txt_Playlist.Text = playlistList[DropDownListbox.SelectedIndex].name;
+                    txt_PlaylistHeading.Text = playlistList[DropDownListbox.SelectedIndex].name;
+                    foreach (var item in playlistList[DropDownListbox.SelectedIndex].songsList)
+                    {
+                        songList.Add(item);
+                        listview.Items.Add(System.IO.Path.GetFileNameWithoutExtension(item));
+                        
+                    }
+                    
+
+                
+            
+
+
+
+        }
+
+      
     }
 }

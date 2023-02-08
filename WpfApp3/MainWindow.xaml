@@ -1,0 +1,68 @@
+﻿<Window x:Class="WpfApp3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp3"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="400" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" AllowDrop="False">
+    <Grid>
+
+        <Grid Margin="13,9,12,214" Background="AntiqueWhite"  >
+
+
+            <Ellipse  HorizontalAlignment="Left" Height="152" Stroke="Black" VerticalAlignment="Top" Width="146" Margin="122,88,0,0">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="/image-removebg-preview.png"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Grid VerticalAlignment="Top" Height="34" Margin="0,10,0,0">
+                <Button x:Name="playlistButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="26" Margin="15,0,0,0" VerticalAlignment="Center" Width="46" RenderTransformOrigin="0.435,-0.588">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/1024px-Symbol_code_ww_45.svg.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button Background="AntiqueWhite" Content="Info&#xD;&#xA;Info&#xD;&#xA;" HorizontalAlignment="Left" Height="26" Margin="306,4,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.435,-0.588" FontFamily="Gabriola" FontSize="14" Click="Button_Click"/>
+                <TextBlock x:Name="txt_PlaylistHeading" HorizontalAlignment="Left" Height="30" Margin="78,0,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Width="212" TextAlignment="Center" FontFamily="Gabriola" FontWeight="Bold" FontSize="18"/>
+            </Grid>
+            <TextBlock x:Name="txtBlock_songName" HorizontalAlignment="Left" Height="17" Margin="142,253,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="99" TextAlignment="Center" FontFamily="Gabriola" FontSize="14"/>
+            <Grid VerticalAlignment="Top" Height="83" Margin="0,294,0,0">
+                <Button x:Name="prvButton" Background="AntiqueWhite" Content="Button" HorizontalAlignment="Left" Height="26" Margin="24,42,0,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="0.435,-0.588" Click="Previous_Click"/>
+                <Button x:Name="randButton" Background="AntiqueWhite" Content="Button" HorizontalAlignment="Left" Height="26" Margin="321,41,0,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="0.435,-0.588" Click="randButton_Click"/>
+                <Button x:Name="nextButton" Background="AntiqueWhite" Content="Button" HorizontalAlignment="Left" Height="26" Margin="56,42,0,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="0.435,-0.588" Click="Next_Click"/>
+                <Button x:Name="loopButton" Background="AntiqueWhite" Content="Button" HorizontalAlignment="Left" Height="26" Margin="253,41,0,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="0.435,-0.588" Click="loopButton_Click"/>
+                <Button x:Name="playButton" Content="" HorizontalAlignment="Left" Height="36" Margin="169,32,0,0" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.435,-0.588" Click="playButton_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/play-button-hand-drawn-outline-doodle-icon-vector-20922320.jpg" Stretch="UniformToFill"/>
+                    </Button.Background>
+                </Button>
+                <Slider x:Name="slider" Margin="67,5,57,57" ValueChanged="slider_ValueChanged"/>
+                <Button x:Name="stopButton" Background="AntiqueWhite" Content="Button" HorizontalAlignment="Left" Height="26" Margin="101,41,0,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="0.435,-0.588" Click="stopButton_Click"/>
+                <Button x:Name="pauseButton" Background="AntiqueWhite" Content="Button" HorizontalAlignment="Left" Height="26" Margin="136,41,0,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="0.435,-0.588" Click="pauseButton_Click"/>
+            </Grid>
+            <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="37" Margin="37,231,0,0" VerticalAlignment="Top" Width="57" MediaOpened="MediaElement_MediaOpened" MediaEnded="MediaElement_MediaEnded"/>
+
+        </Grid>
+
+        <Grid Background="Bisque" VerticalAlignment="Top" Height="198" Margin="14,402,13,0">
+            <Grid Margin="0,1,0,166">
+                <Button Background="AntiqueWhite" Content="Open&#xD;&#xA;" HorizontalAlignment="Left" Height="23" Margin="21,7,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.435,-0.588" Click="openButton_Click"/>
+                <TextBlock x:Name="txt_Playlist" HorizontalAlignment="Left" Height="30" Margin="105,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="186" TextAlignment="Center" FontFamily="Gabriola" FontWeight="Bold" FontSize="16"><Run Text="Playlist"/><LineBreak/><Run/></TextBlock>
+                <Button x:Name="addPlaylist" Background="AntiqueWhite" Content="+&#xD;&#xA;" HorizontalAlignment="Left" Height="23" Margin="75,6,0,0" VerticalAlignment="Top" Width="26"  RenderTransformOrigin="0.435,-0.588" FontSize="16" Click="addPlaylist_Click" />
+                <Button x:Name="deleteButton" Background="AntiqueWhite" Content="+&#xA;" HorizontalAlignment="Left" Height="23" Margin="325,0,0,0" VerticalAlignment="Center" Width="26"  RenderTransformOrigin="0.435,-0.588" FontSize="16" Click="deleteButton_Click" />
+
+            </Grid>
+            <Grid Margin="0,44,0,0">
+                <ListView x:Name="listview" Background="White" Foreground="Black" HorizontalAlignment="Center" Height="127" VerticalAlignment="Center" Width="333" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="listview_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>

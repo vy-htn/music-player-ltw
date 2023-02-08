@@ -317,7 +317,7 @@ namespace WpfApp3
             else
             {
                 isRand = true;
-                randButton.Content = "Rand Mode";
+                
             }
                 
         }

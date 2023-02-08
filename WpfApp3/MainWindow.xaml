@@ -11,13 +11,13 @@
         <Grid Margin="13,9,12,214" Background="AntiqueWhite"  >
 
 
-            <Ellipse  HorizontalAlignment="Left" Height="152" Stroke="Black" VerticalAlignment="Top" Width="146" Margin="122,88,0,0">
+            <Ellipse x:Name="ellipse"  HorizontalAlignment="Left" Height="152" Stroke="Black" VerticalAlignment="Top" Width="146" Margin="122,88,0,0">
                 <Ellipse.Fill>
                     <ImageBrush ImageSource="/image-removebg-preview.png" Stretch="Fill"/>
                 </Ellipse.Fill>
             </Ellipse>
             <Grid VerticalAlignment="Top" Height="34" Margin="0,10,0,0">
-                <Button x:Name="playlistButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="26" Margin="17,0,0,0" VerticalAlignment="Center" Width="44" RenderTransformOrigin="0.435,-0.588" Click="playlistButton_Click">
+                <Button x:Name="playlistButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="30" Margin="17,0,0,0" VerticalAlignment="Center" Width="44" RenderTransformOrigin="0.435,-0.588" Click="playlistButton_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/menu.png" Stretch="Uniform"/>
                     </Button.Background>
@@ -34,15 +34,23 @@
                     </Button.Background>
 
                 </Button>
-                <Button x:Name="randButton" Background="AntiqueWhite" Content="Button" HorizontalAlignment="Left" Height="26" Margin="321,41,0,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="0.435,-0.588" Click="randButton_Click"/>
+                <Button x:Name="randButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="39" Margin="304,36,0,0" VerticalAlignment="Top" Width="43" RenderTransformOrigin="0.435,-0.588" Click="randButton_Click" BorderBrush="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/shuffle.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
                 <Button x:Name="nextButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="16" Margin="56,45,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="0.435,-0.588" Click="Next_Click" BorderBrush="{x:Null}">
                     <Button.Background>
                         <ImageBrush ImageSource="/next.png" Stretch="Fill"/>
                     </Button.Background>
 
                 </Button>
-                <Button x:Name="loopButton" Background="AntiqueWhite" Content="Button" HorizontalAlignment="Left" Height="26" Margin="253,41,0,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="0.435,-0.588" Click="loopButton_Click"/>
-                <Button x:Name="playButton" Content="" HorizontalAlignment="Left" Height="36" Margin="169,32,0,0" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.435,-0.588" Click="playButton_Click" BorderBrush="{x:Null}">
+                <Button x:Name="loopButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="26" Margin="244,41,0,0" VerticalAlignment="Top" Width="35" RenderTransformOrigin="0.435,-0.588" Click="loopButton_Click" BorderBrush="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/loop.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="playButton" Content="" HorizontalAlignment="Left" Height="36" Margin="180,32,0,0" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.435,-0.588" Click="playButton_Click" BorderBrush="{x:Null}">
                     <Button.Background>
                         <ImageBrush ImageSource="/play.png" Stretch="Uniform"/>
                     </Button.Background>
@@ -63,12 +71,19 @@
                 </Button>
             </Grid>
             <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="37" Margin="37,231,0,0" VerticalAlignment="Top" Width="57" MediaOpened="MediaElement_MediaOpened" MediaEnded="MediaElement_MediaEnded"/>
-            <StackPanel x:Name="DropDownPlaylist" HorizontalAlignment="Left" Height="194" Margin="15,42,0,0" VerticalAlignment="Top" Width="160">
-                <ListBox x:Name="DropDownListbox" Height="181" Width="158" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DropDownListbox_SelectionChanged"/>
+            <StackPanel x:Name="DropDownPlaylist" HorizontalAlignment="Left" Height="223" Margin="15,42,0,0" VerticalAlignment="Top" Width="160" Visibility="Collapsed">
+                <Border BorderBrush="Black" BorderThickness="0.75">
+
+
+                    <ListBox x:Name="DropDownListbox" Height="199" Width="163" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DropDownListbox_SelectionChanged" Background="Bisque" BorderBrush="{x:Null}"/>
+
+                </Border>
+
+
             </StackPanel>
             <StackPanel x:Name="infoStackPanel" HorizontalAlignment="Left" Height="210" Margin="222,44,0,0" VerticalAlignment="Top" Width="137" Visibility="Collapsed">
-                <Border BorderBrush="Black" BorderThickness="0.5" Width="114" HorizontalAlignment="Right">
-                    <TextBlock x:Name="infotxtBlock" Height="206" TextWrapping="Wrap" Background="AntiqueWhite" FontFamily="Gabriola" TextAlignment="Center"><Run Text="Function:"/><LineBreak/><Run Text="Play / Pause / Stop"/><LineBreak/><Run Text="Loop song / Shuffle"/><LineBreak/><Run Text="Previous / Next"/><LineBreak/><Run Text="Add Playlist"/><LineBreak/><Run Text="Add/Delete songs"/><LineBreak/><Run/></TextBlock>
+                <Border BorderBrush="Black" BorderThickness="0.75" Width="114" HorizontalAlignment="Right">
+                    <TextBlock x:Name="infotxtBlock" Background="Bisque" Height="206" TextWrapping="Wrap"  FontFamily="Gabriola" TextAlignment="Center" FontSize="15"><Run Text="Function:"/><LineBreak/><Run Text="Play / Pause / Stop"/><LineBreak/><Run Text="Loop song / Shuffle"/><LineBreak/><Run Text="Previous / Next"/><LineBreak/><Run Text="Add Playlist"/><LineBreak/><Run Text="Add/Delete songs"/><LineBreak/><Run/></TextBlock>
 
                 </Border>
             </StackPanel>

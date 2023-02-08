@@ -210,6 +210,7 @@ namespace WpfApp3
                     mediaElement.LoadedBehavior = MediaState.Manual;
                     slider.Value = 0;
                     txtBlock_songName.Text = songList[i].name;
+                    
                 }    
                    
             }    
@@ -282,7 +283,10 @@ namespace WpfApp3
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (infoStackPanel.Visibility == Visibility.Collapsed)
+                infoStackPanel.Visibility = Visibility.Visible;
+            else
+                infoStackPanel.Visibility = Visibility.Collapsed;
         }
 
         private void loopButton_Click(object sender, RoutedEventArgs e)
@@ -329,7 +333,12 @@ namespace WpfApp3
                 System.Windows.Forms.MessageBox.Show("Enter valid playlist name");
 
             }
-            txt_Playlist.Text = playlistName;
+            else
+            {
+                txt_Playlist.Text = playlistName;
+                txt_PlaylistHeading.Text = playlistName;
+            }
+
             if (listview.SelectedItems.Count >0)
             {
                 foreach (var item in listview.SelectedItems)
@@ -339,6 +348,14 @@ namespace WpfApp3
                 }
             }
 
+        }
+
+        private void playlistButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DropDownPlaylist.Visibility== Visibility.Collapsed)
+                DropDownPlaylist.Visibility = Visibility.Visible;
+            else
+                DropDownPlaylist.Visibility = Visibility.Collapsed;
         }
     }
 }

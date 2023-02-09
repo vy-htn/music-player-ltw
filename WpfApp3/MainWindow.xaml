@@ -34,7 +34,7 @@
                     </Button.Background>
 
                 </Button>
-                <Button x:Name="randButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="39" Margin="304,36,0,0" VerticalAlignment="Top" Width="43" RenderTransformOrigin="0.435,-0.588" Click="randButton_Click" BorderBrush="{x:Null}">
+                <Button x:Name="randButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="35" Margin="300,36,0,0" VerticalAlignment="Top" Width="47" RenderTransformOrigin="0.435,-0.588" Click="randButton_Click" BorderBrush="{x:Null}" FontFamily="Gabriola">
                     <Button.Background>
                         <ImageBrush ImageSource="/shuffle.png" Stretch="Uniform"/>
                     </Button.Background>
@@ -45,9 +45,12 @@
                     </Button.Background>
 
                 </Button>
-                <Button x:Name="loopButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="26" Margin="244,41,0,0" VerticalAlignment="Top" Width="35" RenderTransformOrigin="0.435,-0.588" Click="loopButton_Click" BorderBrush="{x:Null}">
+                <Button x:Name="loopButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="26" Margin="244,41,0,0" VerticalAlignment="Top" Width="35" RenderTransformOrigin="0.435,-0.588" Click="loopButton_Click" BorderBrush="{x:Null}" FontFamily="Gabriola">
+
+
                     <Button.Background>
                         <ImageBrush ImageSource="/loop.png" Stretch="Uniform"/>
+
                     </Button.Background>
                 </Button>
                 <Button x:Name="playButton" Content="" HorizontalAlignment="Left" Height="36" Margin="180,32,0,0" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.435,-0.588" Click="playButton_Click" BorderBrush="{x:Null}">
@@ -92,7 +95,7 @@
 
         <Grid Background="Bisque" VerticalAlignment="Top" Height="198" Margin="14,402,13,0">
             <Grid Margin="0,1,0,166">
-                <Button Content=""  HorizontalAlignment="Left" Height="23" Margin="21,7,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.435,-0.588" Click="openButton_Click" BorderBrush="{x:Null}">
+                <Button Content=""  HorizontalAlignment="Left" Height="25" Margin="21,5,0,0" VerticalAlignment="Top" Width="34" RenderTransformOrigin="0.435,-0.588" Click="openButton_Click" BorderBrush="{x:Null}">
                     <Button.Background>
 
                         <ImageBrush ImageSource="/openfiles.png" Stretch="Uniform"/>

@@ -106,9 +106,11 @@ namespace WpfApp3
                         int randomIndex = rand.Next(0, listview.Items.Count - 1);
                         listview.SelectedIndex = randomIndex;
                         timer.Start();
+                        ended = false;
+
+
 
                     }
-                    ended = false;
                 }
                 if (!isRand && !isLoop)
                 {
@@ -291,12 +293,17 @@ namespace WpfApp3
             isLoop = !isLoop;
             if (isLoop == false)
             {
-                loopButton.Content = "off";
+                loopButton.Content = "Off";
+                
+                loopButton.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(100, 250, 235, 215));
+
             }
                 
             else
             {
-                loopButton.Content = "Loop On";
+                loopButton.Content =" ";
+                loopButton.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(0, 255, 255, 255));
+                loopButton.Background = new ImageBrush(new BitmapImage(new Uri(@"E:\VY\LTTQ\WpfApp3\WpfApp3\loop.png")));
                 
                 
             }
@@ -311,13 +318,17 @@ namespace WpfApp3
             {
                 isRand = false;
                 randButton.Content = "Off";
-                
+                randButton.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(100, 250, 235, 215));
+
+
             }
-                
+
             else
             {
                 isRand = true;
-                
+                randButton.Content = " ";
+                randButton.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(0, 255, 255, 255));
+                randButton.Background = new ImageBrush(new BitmapImage(new Uri(@"E:\VY\LTTQ\WpfApp3\WpfApp3\shuffle.png")));
             }
                 
         }
@@ -346,7 +357,6 @@ namespace WpfApp3
                     foreach (var item in songList)
                     {
                         playlist.songsList.Add(item);
-                        System.Windows.Forms.MessageBox.Show(item);
                     }
                     playlistList.Add(playlist);
 

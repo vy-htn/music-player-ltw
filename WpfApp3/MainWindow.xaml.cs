@@ -19,6 +19,7 @@ using System.IO;
 using Microsoft.VisualBasic;
 using System.Windows.Threading;
 using System.Windows.Forms.VisualStyles;
+using System.Security;
 
 namespace WpfApp3
 {
@@ -45,6 +46,7 @@ namespace WpfApp3
         bool isRand = false;
 
 
+
         private Random rand = new Random();
         public   MainWindow()
         {
@@ -52,11 +54,11 @@ namespace WpfApp3
             slider.Minimum = 0;
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick1;
-
            
 
             mediaElement.MediaOpened += MediaElement_MediaOpened;
             mediaElement.MediaEnded += MediaElement_MediaEnded;
+            saveButton.IsEnabled = false;
 
 
         }
@@ -76,7 +78,7 @@ namespace WpfApp3
       
 
         bool ended = false;
-
+        bool changed = false;
         private void MediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
             slider.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
@@ -90,43 +92,44 @@ namespace WpfApp3
             {
                 return;
             }
-              if (isLoop)
-                {
+            if (isLoop)
+            {
 
-                    isRand = false;
-                    slider.Value = 0;
+                isRand = false;
+                slider.Value = 0;
+                timer.Start();
+                ended = false;
+
+            }
+            if (isRand)
+            {
+                
+
+                if (listview.Items.Count > 0)
+                {
+                    int randomIndex = rand.Next(0, listview.Items.Count);
+                    listview.SelectedIndex = randomIndex;
                     timer.Start();
-                    ended = false;
+
 
                 }
-                if (isRand)
+                ended = false;
+
+            }
+            if (!isRand && !isLoop)
+            {
+
+                timer.Stop();
+                if (listview.Items.Count > 0 && listview.SelectedIndex < listview.Items.Count - 1)
                 {
-                    if (listview.Items.Count > 0)
-                    {
-                        int randomIndex = rand.Next(0, listview.Items.Count - 1);
-                        listview.SelectedIndex = randomIndex;
-                        timer.Start();
-                        ended = false;
-
-
-
-                    }
+                    listview.SelectedIndex++;
+                    timer.Start();
                 }
-                if (!isRand && !isLoop)
-                {
-
-                    timer.Stop();
-                    if (listview.Items.Count > 0 && listview.SelectedIndex < listview.Items.Count - 1)
-                    {
-                        listview.SelectedIndex++;
-                        timer.Start();
-                    }
-                    ended = true;
+                ended = true;
 
 
-                }
-            
-            
+            }
+
 
         }
 
@@ -140,6 +143,7 @@ namespace WpfApp3
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+               changed = true;
                foreach (string filename in openFileDialog.FileNames )
                {
                     
@@ -165,36 +169,50 @@ namespace WpfApp3
 
         private void playButton_Click(object sender, RoutedEventArgs e)
         {
-            mediaElement.Play();
-            timer.Start();
-            pauseButton.IsEnabled = true;
+            if (listview.SelectedIndex >= 0)
+            {
+                mediaElement.Play();
+                timer.Start();
+                pauseButton.IsEnabled = true;
+                stopButton.IsEnabled = true;
+                nextButton.IsEnabled = true;
+                prvButton.IsEnabled = true;
+            }
+            
+            
             
 
         }
 
         private void pauseButton_Click(object sender, RoutedEventArgs e)
         {
-            mediaElement.Pause();
-            timer.Stop();
-            slider.Value++;
-            pauseButton.IsEnabled= false;
+           
+            if (listview.SelectedIndex >= 0)
+            {
+                mediaElement.Pause();
+                slider.Value++;
+                timer.Stop();
+                pauseButton.IsEnabled = false;
+            }
+           
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
-            mediaElement.Stop();
-            timer.Stop();
-            slider.Value = 0;
+            if (listview.SelectedIndex >= 0)
+            {
+                mediaElement.Stop();
+                timer.Stop();
+                slider.Value = 0;
+            }
+            
+           
         }
 
         private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            mediaElement.Position = TimeSpan.FromSeconds(slider.Value);
             
-           
-            
-                mediaElement.Position = TimeSpan.FromSeconds(slider.Value);
-              
-
         }
 
         
@@ -212,8 +230,7 @@ namespace WpfApp3
                     
                 }    
                    
-            }    
-            
+            }
            
 
 
@@ -221,32 +238,38 @@ namespace WpfApp3
 
         private void Previous_Click(object sender, RoutedEventArgs e)
         {
-            isLoop = false;
-            if (listview.SelectedIndex > 0)
+            if (prvButton.IsEnabled)
             {
-                listview.SelectedIndex--;
-                mediaElement.Play();
-                timer.Start();
+                if (listview.SelectedIndex > 0)
+                {
+                    listview.SelectedIndex--;
+                    mediaElement.Play();
+                    timer.Start();
+                }
             }
+            
+            
             
 
         }
 
         private void Next_Click(object sender, RoutedEventArgs e)
         {
-            isLoop = false;
-            if (listview.Items.Count > 0 && listview.SelectedIndex < listview.Items.Count -1)
+            if (nextButton.IsEnabled)
             {
-                listview.SelectedIndex++;
-                mediaElement.Play();
-                timer.Start();
+                if (listview.Items.Count > 0 && listview.SelectedIndex < listview.Items.Count - 1)
+                {
+                    listview.SelectedIndex++;
+                    mediaElement.Play();
+                    timer.Start();
+                }
             }
             
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            changed = true;
             var selectedItems = listview.SelectedItems;
             while (selectedItems.Count > 0)
             {
@@ -313,24 +336,32 @@ namespace WpfApp3
 
         private void randButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            isRand = !isRand;
             if (isRand)
             {
-                isRand = false;
-                randButton.Content = "Off";
-                randButton.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(100, 250, 235, 215));
+
+                randButton.Content = " ";
+                randButton.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(0, 255, 255, 255));
+                randButton.Background = new ImageBrush(new BitmapImage(new Uri(@"E:\VY\LTTQ\WpfApp3\WpfApp3\shuffle.png")));
 
 
             }
 
             else
             {
-                isRand = true;
-                randButton.Content = " ";
-                randButton.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(0, 255, 255, 255));
-                randButton.Background = new ImageBrush(new BitmapImage(new Uri(@"E:\VY\LTTQ\WpfApp3\WpfApp3\shuffle.png")));
+                randButton.Content = "Off";
+                randButton.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(100, 250, 235, 215));
+                
             }
                 
+        }
+
+        private void playlistButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DropDownPlaylist.Visibility == Visibility.Collapsed)
+                DropDownPlaylist.Visibility = Visibility.Visible;
+            else
+                DropDownPlaylist.Visibility = Visibility.Collapsed;
         }
 
         private void addPlaylist_Click(object sender, RoutedEventArgs e)
@@ -362,41 +393,62 @@ namespace WpfApp3
 
 
                 }
+                else
+                {
+                    Playlist playlist = new Playlist();
+                    playlist.name = playlistName;
+                    playlistList.Add(playlist);
+                }
                
             }
         }
 
-        private void playlistButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (DropDownPlaylist.Visibility== Visibility.Collapsed)
-                DropDownPlaylist.Visibility = Visibility.Visible;
-            else
-                DropDownPlaylist.Visibility = Visibility.Collapsed;
-        }
+      
 
         private void DropDownListbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            
-                    listview.Items.Clear();
-                    songList.Clear();
-                    txt_Playlist.Text = playlistList[DropDownListbox.SelectedIndex].name;
-                    txt_PlaylistHeading.Text = playlistList[DropDownListbox.SelectedIndex].name;
-                    foreach (var item in playlistList[DropDownListbox.SelectedIndex].songsList)
-                    {
-                        songList.Add(item);
-                        listview.Items.Add(System.IO.Path.GetFileNameWithoutExtension(item));
-                        
-                    }
-                    
 
-                
-            
+
+
+            mediaElement.Pause();
+            txtBlock_songName.Text = "";
+            txt_Playlist.Text = playlistList[DropDownListbox.SelectedIndex].name;
+            txt_PlaylistHeading.Text = playlistList[DropDownListbox.SelectedIndex].name;
+            if (playlistList[DropDownListbox.SelectedIndex].songsList != null)
+            {
+                listview.Items.Clear();
+                songList.Clear();
+                foreach (var item in playlistList[DropDownListbox.SelectedIndex].songsList)
+                {
+                    songList.Add(item);
+                    listview.Items.Add(System.IO.Path.GetFileNameWithoutExtension(item));
+
+                }
+            }
+            saveButton.IsEnabled = true;
+
+
 
 
 
         }
 
-      
+       
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+                playlistList[DropDownListbox.SelectedIndex].songsList.Clear();
+                foreach (var item in songList)
+                {
+                    playlistList[DropDownListbox.SelectedIndex].songsList.Add(item);
+
+                }
+            
+            System.Windows.Forms.MessageBox.Show("Saved successfully");
+
+
+
+        }
+
     }
 }

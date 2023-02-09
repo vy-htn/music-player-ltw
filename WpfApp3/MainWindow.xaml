@@ -74,11 +74,14 @@
                 </Button>
             </Grid>
             <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="37" Margin="37,231,0,0" VerticalAlignment="Top" Width="57" MediaOpened="MediaElement_MediaOpened" MediaEnded="MediaElement_MediaEnded"/>
-            <StackPanel x:Name="DropDownPlaylist" HorizontalAlignment="Left" Height="223" Margin="15,42,0,0" VerticalAlignment="Top" Width="160" Visibility="Collapsed">
+            <StackPanel x:Name="DropDownPlaylist" HorizontalAlignment="Left" Height="223" Margin="18,42,0,0" VerticalAlignment="Top" Width="157" Visibility="Collapsed">
                 <Border BorderBrush="Black" BorderThickness="0.75">
+                    <StackPanel>
+                        <TextBlock Background="Bisque" Text="Menu" TextAlignment="Center" FontFamily="Gabriola" FontSize="14" FontWeight="Bold"></TextBlock>
+                        <ListBox x:Name="DropDownListbox" Height="192" Width="163" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DropDownListbox_SelectionChanged" Background="Bisque" BorderBrush="{x:Null}" FontFamily="Gabriola" FontSize="13"/>
 
+                    </StackPanel>
 
-                    <ListBox x:Name="DropDownListbox" Height="199" Width="163" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DropDownListbox_SelectionChanged" Background="Bisque" BorderBrush="{x:Null}"/>
 
                 </Border>
 
@@ -104,6 +107,7 @@
                 <TextBlock x:Name="txt_Playlist" HorizontalAlignment="Left" Height="30" Margin="105,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="186" TextAlignment="Center" FontFamily="Gabriola" FontWeight="Bold" FontSize="16"><Run Text="Playlist"/><LineBreak/><Run/></TextBlock>
                 <Button x:Name="addPlaylist" Background="AntiqueWhite" Content="+&#xD;&#xA;" HorizontalAlignment="Left" Height="23" Margin="75,6,0,0" VerticalAlignment="Top" Width="26"  RenderTransformOrigin="0.435,-0.588" FontSize="16" Click="addPlaylist_Click" />
                 <Button x:Name="deleteButton" Background="AntiqueWhite" Content="Del&#xD;&#xA;&#xA;" HorizontalAlignment="Left" Height="23" Margin="325,0,0,0" VerticalAlignment="Center" Width="26"  RenderTransformOrigin="0.435,-0.588" Click="deleteButton_Click" FontFamily="Gabriola" />
+                <Button x:Name="saveButton" Background="AntiqueWhite" Content="Save&#xD;&#xA;&#xA;" HorizontalAlignment="Left" Height="23" Margin="288,0,0,0" VerticalAlignment="Center" Width="26"  RenderTransformOrigin="0.435,-0.588" Click="saveButton_Click" FontFamily="Gabriola" />
 
             </Grid>
             <Grid Margin="0,44,0,0">

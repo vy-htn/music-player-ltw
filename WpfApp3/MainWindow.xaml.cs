@@ -449,7 +449,6 @@ namespace WpfApp3
         {
 
 
-            System.Windows.Forms.MessageBox.Show(playlistList[DropDownListbox.SelectedIndex].name);
             
 
 

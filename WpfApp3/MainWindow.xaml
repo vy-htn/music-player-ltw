@@ -66,7 +66,7 @@
                     </Button.Background>
 
                 </Button>
-                <Slider x:Name="slider" Margin="90,5,41,57" ValueChanged="slider_ValueChanged"/>
+                <Slider x:Name="slider" Margin="90,5,41,57" ValueChanged="slider_ValueChanged" MouseLeftButtonDown="slider_MouseLeftButtonDown"/>
                 <Button x:Name="stopButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="26" Margin="101,41,0,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="0.435,-0.588" Click="stopButton_Click" BorderBrush="{x:Null}">
                     <Button.Background>
                         <ImageBrush ImageSource="/stop.png"/>
@@ -87,12 +87,12 @@
                 </Button>
             </Grid>
             <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="37" Margin="37,231,0,0" VerticalAlignment="Top" Width="57" MediaOpened="MediaElement_MediaOpened" MediaEnded="MediaElement_MediaEnded"/>
-            <StackPanel x:Name="DropDownPlaylist" HorizontalAlignment="Left" Height="223" Margin="18,42,0,0" VerticalAlignment="Top" Width="157" Visibility="Collapsed">
+            <StackPanel x:Name="DropDownPlaylist" HorizontalAlignment="Left" Height="251" Margin="18,42,0,0" VerticalAlignment="Top" Width="157" Visibility="Collapsed">
                 <Border BorderBrush="Black" BorderThickness="0.75">
-                    <StackPanel>
+                    <StackPanel Height="246">
                         <TextBlock Background="Bisque" Text="Menu" TextAlignment="Center" FontFamily="Gabriola" FontSize="14" FontWeight="Bold"></TextBlock>
                         <ListBox x:Name="DropDownListbox" Height="192" Width="163" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DropDownListbox_SelectionChanged" Background="Bisque" BorderBrush="{x:Null}" FontFamily="Gabriola" FontSize="13"/>
-
+                        <Button Content ="+ Add new playlist " Height="31" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Gabriola" FontSize="15" Click="Button_Click_1" />
                     </StackPanel>
 
 

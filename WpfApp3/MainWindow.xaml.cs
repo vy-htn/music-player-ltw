@@ -531,5 +531,39 @@ namespace WpfApp3
                 this.DragMove();
             }
         }
+
+        private void slider_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void slider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Windows.Point point = e.GetPosition(sender as Slider);
+            double ratio = point.X / (sender as Slider).ActualWidth;
+            (sender as Slider).Value = ratio * (sender as Slider).Maximum;
+
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            string playlistName = Interaction.InputBox("Enter playlist name");
+            if (playlistName == string.Empty)
+            {
+                System.Windows.Forms.MessageBox.Show("Enter valid playlist name");
+
+            }
+            else
+            {
+                txt_Playlist.Text = playlistName;
+                txt_PlaylistHeading.Text = playlistName;
+                DropDownListbox.Items.Add(playlistName);
+                Playlist playlist = new Playlist();
+                playlist.name = playlistName;
+                playlistList.Add(playlist);
+            }
+            
+        }
     }
 }

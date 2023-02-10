@@ -54,9 +54,10 @@ namespace WpfApp3
         {
             InitializeComponent();
             slider.Minimum = 0;
+            volumeSlider.Maximum = 100;
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick1;
-
+            volumeSlider.Value= 100;
             timer1.Interval = TimeSpan.FromSeconds(0.1);
             timer1.Tick += Timer1_Tick;
 
@@ -499,7 +500,12 @@ namespace WpfApp3
 
         private void volumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            mediaElement.Volume = volumeSlider.Value;
+            if (volumeSlider != null)
+            {
+                mediaElement.Volume = volumeSlider.Value;
+
+            }
+
         }
     }
 }

@@ -52,7 +52,7 @@
                     </Button.Background>
 
                 </Button>
-                <Button x:Name="loopButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="26" Margin="244,41,0,0" VerticalAlignment="Top" Width="35" RenderTransformOrigin="0.435,-0.588" Click="loopButton_Click" BorderBrush="{x:Null}" FontFamily="Gabriola">
+                <Button x:Name="loopButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="26" Margin="239,41,0,0" VerticalAlignment="Top" Width="35" RenderTransformOrigin="0.435,-0.588" Click="loopButton_Click" BorderBrush="{x:Null}" FontFamily="Gabriola">
 
 
                     <Button.Background>

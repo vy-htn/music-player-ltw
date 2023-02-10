@@ -304,37 +304,39 @@ namespace WpfApp3
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             
-            var selectedItems = listview.SelectedItems;
-            while (selectedItems.Count > 0)
-            {
-
-                var selectedItem = selectedItems[0];
-                for (int i = 0; i < listview.Items.Count; i++)
+                var selectedItems = listview.SelectedItems;
+                while (selectedItems.Count > 0)
                 {
-                    if (listview.SelectedIndex == i)
+
+                    var selectedItem = selectedItems[0];
+                    for (int i = 0; i < listview.Items.Count; i++)
                     {
-
-
-                        for (int j = i; j < songList.Count - 1; j++)
+                        if (listview.SelectedIndex == i)
                         {
-                            songList[j] = songList[j + 1];
+
+
+                            for (int j = i; j < songList.Count - 1; j++)
+                            {
+                                songList[j] = songList[j + 1];
+
+                            }
+
+                            songList[songList.Count - 1] = null;
+                            songList.Remove(songList[songList.Count - 1]);
+
+
 
                         }
-
-                        songList[songList.Count - 1] = null;
-                        songList.Remove(songList[songList.Count - 1]);
-
-
-
                     }
+                    listview.Items.Remove(selectedItem);
+                    slider.Value = 0;
+                    timer.Stop();
+                    timer1.Stop();
+                    angle = 0;
+                    mediaElement.Pause();
                 }
-                listview.Items.Remove(selectedItem);
-                slider.Value = 0;
-                timer.Stop();
-                timer1.Stop();
-                angle = 0;
-                mediaElement.Pause();
-            }
+                
+            
 
             
         }
@@ -434,8 +436,9 @@ namespace WpfApp3
                     Playlist playlist = new Playlist();
                     playlist.name = playlistName;
                     playlistList.Add(playlist);
+
                 }
-               
+
             }
         }
 
@@ -445,13 +448,18 @@ namespace WpfApp3
         {
 
 
+            System.Windows.Forms.MessageBox.Show(playlistList[DropDownListbox.SelectedIndex].name);
+            
 
-            mediaElement.Pause();
+
+            
             txtBlock_songName.Text = "";
             txt_Playlist.Text = playlistList[DropDownListbox.SelectedIndex].name;
             txt_PlaylistHeading.Text = playlistList[DropDownListbox.SelectedIndex].name;
-            if (playlistList[DropDownListbox.SelectedIndex].songsList != null)
+            
+            if ( playlistList[DropDownListbox.SelectedIndex].songsList != null)
             {
+
                 listview.Items.Clear();
                 songList.Clear();
                 foreach (var item in playlistList[DropDownListbox.SelectedIndex].songsList)
@@ -461,6 +469,10 @@ namespace WpfApp3
 
                 }
             }
+            
+
+           
+
             saveButton.IsEnabled = true;
 
 
@@ -473,6 +485,7 @@ namespace WpfApp3
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
 
+                
                 playlistList[DropDownListbox.SelectedIndex].songsList.Clear();
                 foreach (var item in songList)
                 {

@@ -6,11 +6,14 @@
         xmlns:local="clr-namespace:WpfApp3"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="400" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" AllowDrop="False">
+
     <Grid>
 
         <Grid Margin="13,9,12,214" Background="AntiqueWhite"  >
 
-
+            <StackPanel x:Name="volumePanel" HorizontalAlignment="Left" Height="27" Margin="295,247,0,0" VerticalAlignment="Top" Width="112" Visibility="Collapsed">
+                <Slider x:Name="volumeSlider" Width="78" ValueChanged="volumeSlider_ValueChanged" HorizontalAlignment="Left"/>
+            </StackPanel>
             <Ellipse x:Name="ellipse"  HorizontalAlignment="Left" Height="152" Stroke="Black" VerticalAlignment="Top" Width="146" Margin="122,88,0,0">
                 <Ellipse.Fill>
                     <ImageBrush ImageSource="/image-removebg-preview.png" Stretch="Fill"/>
@@ -28,13 +31,17 @@
             </Grid>
             <TextBlock x:Name="txtBlock_songName" HorizontalAlignment="Left" Height="22" Margin="142,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" TextAlignment="Center" FontFamily="Gabriola" FontSize="14"/>
             <Grid VerticalAlignment="Top" Height="83" Margin="0,294,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="22*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
                 <Button x:Name="prvButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="15" Margin="32,45,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="0.435,-0.588" Click="Previous_Click" BorderBrush="{x:Null}">
                     <Button.Background>
                         <ImageBrush ImageSource="/prev.png"/>
                     </Button.Background>
 
                 </Button>
-                <Button x:Name="randButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="35" Margin="300,36,0,0" VerticalAlignment="Top" Width="47" RenderTransformOrigin="0.435,-0.588" Click="randButton_Click" BorderBrush="{x:Null}" FontFamily="Gabriola">
+                <Button x:Name="randButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="35" Margin="282,37,0,0" VerticalAlignment="Top" Width="47" RenderTransformOrigin="0.435,-0.588" Click="randButton_Click" BorderBrush="{x:Null}" FontFamily="Gabriola">
                     <Button.Background>
                         <ImageBrush ImageSource="/shuffle.png" Stretch="Uniform"/>
                     </Button.Background>
@@ -59,7 +66,7 @@
                     </Button.Background>
 
                 </Button>
-                <Slider x:Name="slider" Margin="67,5,57,57" ValueChanged="slider_ValueChanged"/>
+                <Slider x:Name="slider" Margin="90,5,41,57" ValueChanged="slider_ValueChanged"/>
                 <Button x:Name="stopButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="26" Margin="101,41,0,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="0.435,-0.588" Click="stopButton_Click" BorderBrush="{x:Null}">
                     <Button.Background>
                         <ImageBrush ImageSource="/stop.png"/>
@@ -71,6 +78,12 @@
                         <ImageBrush ImageSource="/pause.png"/>
                     </Button.Background>
 
+                </Button>
+
+                <Button x:Name="volumeButton" Content="&#xD;&#xA;" HorizontalAlignment="Left" Height="27" Margin="3,38,0,0" VerticalAlignment="Top" Width="29" RenderTransformOrigin="0.511,0.253" Click="volumeButton_Click" Grid.Column="1" BorderBrush="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/volume.png" Stretch="Uniform"/>
+                    </Button.Background>
                 </Button>
             </Grid>
             <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="37" Margin="37,231,0,0" VerticalAlignment="Top" Width="57" MediaOpened="MediaElement_MediaOpened" MediaEnded="MediaElement_MediaEnded"/>
@@ -87,12 +100,13 @@
 
 
             </StackPanel>
-            <StackPanel x:Name="infoStackPanel" HorizontalAlignment="Left" Height="210" Margin="222,44,0,0" VerticalAlignment="Top" Width="137" Visibility="Collapsed">
+            <StackPanel x:Name="infoStackPanel" HorizontalAlignment="Left" Height="229" Margin="222,44,0,0" VerticalAlignment="Top" Width="137" Visibility="Collapsed">
                 <Border BorderBrush="Black" BorderThickness="0.75" Width="114" HorizontalAlignment="Right">
-                    <TextBlock x:Name="infotxtBlock" Background="Bisque" Height="206" TextWrapping="Wrap"  FontFamily="Gabriola" TextAlignment="Center" FontSize="15"><Run Text="Function:"/><LineBreak/><Run Text="Play / Pause / Stop"/><LineBreak/><Run Text="Loop song / Shuffle"/><LineBreak/><Run Text="Previous / Next"/><LineBreak/><Run Text="Add Playlist"/><LineBreak/><Run Text="Add/Delete songs"/><LineBreak/><Run/></TextBlock>
+                    <TextBlock x:Name="infotxtBlock" Background="Bisque" Height="226" TextWrapping="Wrap"  FontFamily="Gabriola" TextAlignment="Center" FontSize="15"><Run Text="Function:"/><LineBreak/><Run Text="Play / Pause / Stop"/><LineBreak/><Run Text="Play in order"/><LineBreak/><Run Text="Loop 1 song / Shuffle"/><LineBreak/><Run Text="Previous / Next"/><LineBreak/><Run Text="Add Playlist"/><LineBreak/><Run Text="Add/Delete songs"/><LineBreak/><Run Text="Save changes to playlist"/><LineBreak/><Run Text="Volume"/><LineBreak/><Run/></TextBlock>
 
                 </Border>
             </StackPanel>
+
 
         </Grid>
 

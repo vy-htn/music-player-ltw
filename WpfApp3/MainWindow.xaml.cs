@@ -38,10 +38,12 @@ namespace WpfApp3
     {
 
        
-
         private DispatcherTimer timer = new DispatcherTimer();
+        private DispatcherTimer timer1 = new DispatcherTimer();
+
         private List<string> songList= new List<string>();
         private List<Playlist> playlistList = new List<Playlist>();
+        double angle = 0;
         bool isLoop = false;
         bool isRand = false;
 
@@ -54,35 +56,49 @@ namespace WpfApp3
             slider.Minimum = 0;
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick1;
-           
+
+            timer1.Interval = TimeSpan.FromSeconds(0.1);
+            timer1.Tick += Timer1_Tick;
 
             mediaElement.MediaOpened += MediaElement_MediaOpened;
             mediaElement.MediaEnded += MediaElement_MediaEnded;
             saveButton.IsEnabled = false;
 
+            volumePanel.RenderTransform = new RotateTransform(270,volumePanel.Width/2,volumePanel.Height/2);
 
         }
 
-       
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            
+            angle += 4;
+            ellipse.RenderTransform = new RotateTransform(angle, ellipse.Width / 2, ellipse.Height / 2);
+        }
+
         private void Timer_Tick1(object sender, EventArgs e)
         {
             
             slider.Value++;
+           
             if (slider.Value == slider.Maximum)
             {
                 timer.Stop();
+                timer1.Stop();
 
             }
+            
         }
 
       
 
         bool ended = false;
-        bool changed = false;
+        
         private void MediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
             slider.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
             slider.Value = 0;
+            timer.Start();
+            timer1.Start();
             ended = false;
         }
 
@@ -98,6 +114,7 @@ namespace WpfApp3
                 isRand = false;
                 slider.Value = 0;
                 timer.Start();
+                timer1.Start();
                 ended = false;
 
             }
@@ -109,7 +126,7 @@ namespace WpfApp3
                 {
                     int randomIndex = rand.Next(0, listview.Items.Count);
                     listview.SelectedIndex = randomIndex;
-                    timer.Start();
+                    
 
 
                 }
@@ -120,10 +137,16 @@ namespace WpfApp3
             {
 
                 timer.Stop();
+                timer1.Stop();
+                angle = 0;
+
+
                 if (listview.Items.Count > 0 && listview.SelectedIndex < listview.Items.Count - 1)
                 {
                     listview.SelectedIndex++;
                     timer.Start();
+                    timer1.Start();
+
                 }
                 ended = true;
 
@@ -143,7 +166,7 @@ namespace WpfApp3
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-               changed = true;
+               
                foreach (string filename in openFileDialog.FileNames )
                {
                     
@@ -173,6 +196,8 @@ namespace WpfApp3
             {
                 mediaElement.Play();
                 timer.Start();
+                timer1.Start();
+
                 pauseButton.IsEnabled = true;
                 stopButton.IsEnabled = true;
                 nextButton.IsEnabled = true;
@@ -192,6 +217,8 @@ namespace WpfApp3
                 mediaElement.Pause();
                 slider.Value++;
                 timer.Stop();
+                timer1.Stop();
+
                 pauseButton.IsEnabled = false;
             }
            
@@ -201,8 +228,10 @@ namespace WpfApp3
         {
             if (listview.SelectedIndex >= 0)
             {
+                angle = 0;
                 mediaElement.Stop();
                 timer.Stop();
+                timer1.Stop();
                 slider.Value = 0;
             }
             
@@ -245,6 +274,8 @@ namespace WpfApp3
                     listview.SelectedIndex--;
                     mediaElement.Play();
                     timer.Start();
+                    timer1.Start();
+
                 }
             }
             
@@ -262,6 +293,8 @@ namespace WpfApp3
                     listview.SelectedIndex++;
                     mediaElement.Play();
                     timer.Start();
+                    timer1.Start();
+
                 }
             }
             
@@ -269,7 +302,7 @@ namespace WpfApp3
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-            changed = true;
+            
             var selectedItems = listview.SelectedItems;
             while (selectedItems.Count > 0)
             {
@@ -297,6 +330,8 @@ namespace WpfApp3
                 listview.Items.Remove(selectedItem);
                 slider.Value = 0;
                 timer.Stop();
+                timer1.Stop();
+                angle = 0;
                 mediaElement.Pause();
             }
 
@@ -450,5 +485,21 @@ namespace WpfApp3
 
         }
 
+        private void volumeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (volumePanel.Visibility == Visibility.Visible)
+            {
+                volumePanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                volumePanel.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void volumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            mediaElement.Volume = volumeSlider.Value;
+        }
     }
 }

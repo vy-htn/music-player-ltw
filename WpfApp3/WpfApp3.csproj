@@ -144,5 +144,8 @@
   <ItemGroup>
     <Resource Include="loop.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="volume.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

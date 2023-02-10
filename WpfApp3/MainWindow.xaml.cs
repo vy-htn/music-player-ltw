@@ -257,6 +257,7 @@ namespace WpfApp3
                     mediaElement.LoadedBehavior = MediaState.Manual;
                     slider.Value = 0;
                     txtBlock_songName.Text = System.IO.Path.GetFileNameWithoutExtension(songList[i]);
+                    mediaElement.Play();
                     
                 }    
                    
@@ -459,7 +460,10 @@ namespace WpfApp3
             
             if ( playlistList[DropDownListbox.SelectedIndex].songsList != null)
             {
-
+                timer.Stop();
+                timer1.Stop();
+                if (mediaElement.CanPause)
+                    mediaElement.Pause();
                 listview.Items.Clear();
                 songList.Clear();
                 foreach (var item in playlistList[DropDownListbox.SelectedIndex].songsList)

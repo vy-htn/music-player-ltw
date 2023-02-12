@@ -20,6 +20,7 @@ using Microsoft.VisualBasic;
 using System.Windows.Threading;
 using System.Windows.Forms.VisualStyles;
 using System.Security;
+using System.Data.SqlClient;
 
 namespace WpfApp3
 {
@@ -27,6 +28,8 @@ namespace WpfApp3
     {
         public string name { get; set; }
         public List<string> songsList { get; set; } = new List<string>();
+
+        public int i { get; set; }
     }
 
 
@@ -66,6 +69,7 @@ namespace WpfApp3
             saveButton.IsEnabled = false;
 
             volumePanel.RenderTransform = new RotateTransform(270,volumePanel.Width/2,volumePanel.Height/2);
+            
 
         }
 
@@ -413,6 +417,18 @@ namespace WpfApp3
             }
             else
             {
+                foreach (var item in playlistList)
+                {
+                    if (item.name == playlistName)
+                    {
+                        item.i++;
+                        playlistName = item.name + item.i.ToString();
+                    }
+
+                   
+                }
+            
+            
                 txt_Playlist.Text = playlistName;
                 txt_PlaylistHeading.Text = playlistName;
                 DropDownListbox.Items.Add(playlistName);
@@ -556,6 +572,16 @@ namespace WpfApp3
             }
             else
             {
+                foreach (var item in playlistList)
+                {
+                    if (item.name == playlistName)
+                    {
+                        item.i++;
+                        playlistName = item.name + item.i.ToString();
+                    }
+
+
+                }
                 txt_Playlist.Text = playlistName;
                 txt_PlaylistHeading.Text = playlistName;
                 DropDownListbox.Items.Add(playlistName);
